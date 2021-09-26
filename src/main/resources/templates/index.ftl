@@ -42,8 +42,7 @@
             </nav>
         </div>
     </header>
-
-    <main class="px-3">
+    <main>
         <div class="row">
             <div class="col m-3">
                 <h1>Students</h1>
@@ -52,39 +51,64 @@
         <div class="row">
             <div class="col m-3">
                 <div class="card">
+                    <div class="card-header bg-black p-2">
+                        <div class="row">
+                            <div class="col">
+                                Management Table
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-sm btn-success">Agregar</button>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title bg-black p-2">Management Table</h5>
-<#--                        <h6 class="card-subtitle mb-2 text-muted">Manage Table</h6>-->
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Upvotes</th>
-                                <th>Downvotes</th>
+                                <th>Matricula</th>
+                                <th>Nombre</th>
+                                <th>Teléfono</th>
+                                <th>Acciones</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Alice</td>
-                                <td>10</td>
-                                <td>11</td>
-                            </tr>
-                            <tr>
-                                <td>Bob</td>
-                                <td>4</td>
-                                <td>3</td>
-                            </tr>
-                            <tr>
-                                <td>Charlie</td>
-                                <td>7</td>
-                                <td>9</td>
-                            </tr>
+                            <#list estudiantes as estudiante>
+                                <tr>
+                                    <td>${estudiante.matricula}</td>
+                                    <td>${estudiante.nombre} ${estudiante.apellido}</td>
+                                    <td>${estudiante.telefono}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target=("#read"+${estudiante.matricula?string})>Ver</button>
+                                        <button type="button" class="btn btn-sm btn-warning">Actualizar</button>
+                                        <button type="button" class="btn btn-sm btn-danger">Borrar</button>
+                                        <!-- Ver Modal -->
+                                        <div class="modal fade" id=("#read"+${estudiante.matricula?string}) data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ...
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Understood</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </#list>
                             </tbody>
                             <tfoot>
                             <tr>
                                 <td>Totals</td>
-                                <td>21</td>
-                                <td>23</td>
+                                <td>${cantidadEstudiantes}</td>
                             </tr>
                             </tfoot>
                         </table>
