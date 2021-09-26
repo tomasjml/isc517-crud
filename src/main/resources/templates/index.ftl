@@ -36,21 +36,62 @@
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="mb-auto">
         <div>
-            <h3 class="float-md-start mb-0">Cover</h3>
+            <h3 class="float-md-start mb-0">Student's CRUD</h3>
             <nav class="nav nav-masthead justify-content-center float-md-end">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="#">Features</a>
-                <a class="nav-link" href="#">Contact</a>
             </nav>
         </div>
     </header>
 
     <main class="px-3">
-        <h1>Cover your page.</h1>
-        <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-        <p class="lead">
-            <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
-        </p>
+        <div class="row">
+            <div class="col m-3">
+                <h1>Students</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title bg-black p-2">Management Table</h5>
+<#--                        <h6 class="card-subtitle mb-2 text-muted">Manage Table</h6>-->
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Upvotes</th>
+                                <th>Downvotes</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Alice</td>
+                                <td>10</td>
+                                <td>11</td>
+                            </tr>
+                            <tr>
+                                <td>Bob</td>
+                                <td>4</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>Charlie</td>
+                                <td>7</td>
+                                <td>9</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td>Totals</td>
+                                <td>21</td>
+                                <td>23</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="mt-auto text-white-50">
