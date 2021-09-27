@@ -59,7 +59,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button type="button" class="btn btn-sm btn-success">Agregar</button>
+                                <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#agregarEstudiante">Agregar</button>
                             </div>
                         </div>
                     </div>
@@ -76,27 +76,90 @@
                             <tbody>
                             <#list estudiantes as estudiante>
                                 <tr>
-                                    <td>${estudiante.matricula}</td>
+                                    <td>${estudiante.matricula?c}</td>
                                     <td>${estudiante.nombre} ${estudiante.apellido}</td>
                                     <td>${estudiante.telefono}</td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target=("#read"+${estudiante.matricula?string})>Ver</button>
-                                        <button type="button" class="btn btn-sm btn-warning">Actualizar</button>
-                                        <button type="button" class="btn btn-sm btn-danger">Borrar</button>
-                                        <!-- Ver Modal -->
-                                        <div class="modal fade" id=("#read"+${estudiante.matricula?string}) data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
+                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target=${"#read"+estudiante.matricula?c}>Ver</button>
+                                        <a id=${"editable"+estudiante.getMatricula()?c}type="button" class="btn btn-sm btn-warning" href="/estudiante/editable">Editar</a>
+
+                                        <!-- Ver Estudiante Modal -->
+                                        <div class="modal fade" id=${"read"+estudiante.matricula?c} data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby=${"read"+estudiante.matricula?c+"Label"} aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <h5 class="modal-title" id=${"read"+estudiante.matricula?c+"Label"}>Información de Estudiante</h5>
+                                                        <button type="button" class="btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="/estudiante/" method="post">
+                                                        <fieldset>
+                                                            <div class="modal-body">
+                                                                <ol class="list-group list-group-flush">
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                                                        <div class="m-auto">
+                                                                            <label for="matricula" class="fw-bold form-label">Matricula</label>
+                                                                            <#if editable>
+                                                                                <input type="text" id="matricula" name="matricula" class="form-control" placeholder="Agregar Matricula" required />
+                                                                            <#else>
+                                                                                <input type="text" id="matricula" name="matricula" class="form-control" value=${estudiante.getMatricula()?c} disabled />
+                                                                            </#if>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-dark">
+                                                                        <div class="m-auto">
+                                                                            <label for="nombre" class="fw-bold form-label">Nombre</label>
+                                                                            <#if editable>
+                                                                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Agregar Nombre" required />
+                                                                            <#else>
+                                                                                <input type="text" id="nombre" name="nombre" class="form-control" value=${estudiante.getNombre()} disabled />
+                                                                            </#if>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                                                        <div class="m-auto">
+                                                                            <label for="apellido" class="fw-bold form-label">Apellido</label>
+                                                                            <#if editable>
+                                                                                <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Agregar Apellido" required />
+                                                                            <#else>
+                                                                                <input type="text" id="apellido" name="apellido" class="form-control" value=${estudiante.getApellido()} disabled />
+                                                                            </#if>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-dark">
+                                                                        <div class="m-auto">
+                                                                            <label for="telefono" class="fw-bold form-label">Teléfono</label>
+                                                                            <#if editable>
+                                                                                <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Agregar Teléfono" required />
+                                                                            <#else>
+                                                                                <input type="text" id="telefono" name="telefono" class="form-control" value=${estudiante.getTelefono()} disabled />
+                                                                            </#if>
+                                                                        </div>
+                                                                    </li>
+                                                                </ol>
+                                                            </div>
+                                                        </fieldset>
+                                                    </form>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target=${"#delete"+estudiante.matricula?c}>Borrar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Delete Estudiante Modal -->
+                                        <div class="modal fade" id=${"delete"+estudiante.matricula?c} data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby=${"delete"+estudiante.matricula?c+"Label"} aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id=${"delete"+estudiante.matricula?c+"Label"}>Borrar Estudiante</h5>
+                                                        <button type="button" class="btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        ...
+                                                        ¿Esta seguro de borrar al estudiante ${estudiante.matricula?c} con nombre ${estudiante.getNombre()} ${estudiante.getApellido()}?
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Understood</button>
+                                                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                        <a type="button" class="btn btn-sm btn-danger" href=${"/estudiante/delete/"+estudiante.getMatricula()?c}>Borrar</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -107,7 +170,7 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td>Totals</td>
+                                <td>Total students:</td>
                                 <td>${cantidadEstudiantes}</td>
                             </tr>
                             </tfoot>
@@ -121,6 +184,54 @@
     <footer class="mt-auto text-white-50">
         <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
     </footer>
+
+    <!-- Agregar Estudiante Modal -->
+    <div class="modal fade" id="agregarEstudiante" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="agregarEstudianteLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agregarEstudianteLabel">Información de Estudiante</h5>
+                    <button type="button" class="btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/estudiante/agregar" method="post">
+                    <fieldset>
+                        <div class="modal-body">
+                            <ol class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="m-auto">
+                                        <label for="matricula" class="fw-bold form-label">Matricula</label>
+                                        <input type="text" id="matricula" name="matricula" class="form-control" placeholder="Agregar Matricula" required />
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-dark">
+                                    <div class="m-auto">
+                                        <label for="nombre" class="fw-bold form-label">Nombre</label>
+                                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Agregar Nombre" required />
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="m-auto">
+                                        <label for="apellido" class="fw-bold form-label">Apellido</label>
+                                        <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Agregar Apellido" required />
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-dark">
+                                    <div class="m-auto">
+                                        <label for="telefono" class="fw-bold form-label">Teléfono</label>
+                                        <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Agregar Teléfono" required />
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </fieldset>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </div>
 
