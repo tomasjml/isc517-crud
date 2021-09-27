@@ -28,6 +28,16 @@ public class EstudianteRepository {
         return Optional.of(foundEstudiante);
     }
 
+    public int findEstudiantePos(int matricula) {
+        int foundEstudiante = -1;
+        for(int i = 0; i < estudiantes.size(); i++) {
+            if(estudiantes.get(i).getMatricula() == matricula){
+                foundEstudiante = i;
+            }
+        };
+        return foundEstudiante;
+    }
+
     public void deleteEstudiante(int matricula){
         estudiantes.remove(findEstudiante(matricula).get());
     }
@@ -37,7 +47,7 @@ public class EstudianteRepository {
     }
 
     public void putEstudiante(int matriculaPasada, Estudiante nuevoEstudiante){
-        estudiantes.remove(findEstudiante(matriculaPasada));
+        estudiantes.remove(findEstudiantePos(matriculaPasada));
         estudiantes.add(nuevoEstudiante);
     }
 

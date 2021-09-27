@@ -81,7 +81,7 @@
                                     <td>${estudiante.telefono}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target=${"#read"+estudiante.matricula?c}>Ver</button>
-                                        <a id=${"editable"+estudiante.getMatricula()?c}type="button" class="btn btn-sm btn-warning" href="/estudiante/editable">Editar</a>
+                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target=${"#edit"+estudiante.matricula?c}>Editar</button>
 
                                         <!-- Ver Estudiante Modal -->
                                         <div class="modal fade" id=${"read"+estudiante.matricula?c} data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby=${"read"+estudiante.matricula?c+"Label"} aria-hidden="true">
@@ -98,41 +98,25 @@
                                                                     <li class="list-group-item d-flex justify-content-between align-items-start">
                                                                         <div class="m-auto">
                                                                             <label for="matricula" class="fw-bold form-label">Matricula</label>
-                                                                            <#if editable>
-                                                                                <input type="text" id="matricula" name="matricula" class="form-control" placeholder="Agregar Matricula" required />
-                                                                            <#else>
-                                                                                <input type="text" id="matricula" name="matricula" class="form-control" value=${estudiante.getMatricula()?c} disabled />
-                                                                            </#if>
+                                                                            <input type="text" id="matricula" name="matricula" class="form-control" value=${estudiante.getMatricula()?c} disabled />
                                                                         </div>
                                                                     </li>
                                                                     <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-dark">
                                                                         <div class="m-auto">
                                                                             <label for="nombre" class="fw-bold form-label">Nombre</label>
-                                                                            <#if editable>
-                                                                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Agregar Nombre" required />
-                                                                            <#else>
-                                                                                <input type="text" id="nombre" name="nombre" class="form-control" value=${estudiante.getNombre()} disabled />
-                                                                            </#if>
+                                                                            <input type="text" id="nombre" name="nombre" class="form-control" value=${estudiante.getNombre()} disabled />
                                                                         </div>
                                                                     </li>
                                                                     <li class="list-group-item d-flex justify-content-between align-items-start">
                                                                         <div class="m-auto">
                                                                             <label for="apellido" class="fw-bold form-label">Apellido</label>
-                                                                            <#if editable>
-                                                                                <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Agregar Apellido" required />
-                                                                            <#else>
-                                                                                <input type="text" id="apellido" name="apellido" class="form-control" value=${estudiante.getApellido()} disabled />
-                                                                            </#if>
+                                                                            <input type="text" id="apellido" name="apellido" class="form-control" value=${estudiante.getApellido()} disabled />
                                                                         </div>
                                                                     </li>
                                                                     <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-dark">
                                                                         <div class="m-auto">
                                                                             <label for="telefono" class="fw-bold form-label">Teléfono</label>
-                                                                            <#if editable>
-                                                                                <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Agregar Teléfono" required />
-                                                                            <#else>
-                                                                                <input type="text" id="telefono" name="telefono" class="form-control" value=${estudiante.getTelefono()} disabled />
-                                                                            </#if>
+                                                                            <input type="text" id="telefono" name="telefono" class="form-control" value=${estudiante.getTelefono()} disabled />
                                                                         </div>
                                                                     </li>
                                                                 </ol>
@@ -146,6 +130,55 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Editar Estudiante Modal -->
+                                        <div class="modal fade" id=${"edit"+estudiante.matricula?c} data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby=${"edit"+estudiante.matricula?c+"Label"} aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id=${"edit"+estudiante.matricula?c+"Label"}>Información de Estudiante</h5>
+                                                        <button type="button" class="btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form action=${"/estudiante/"+estudiante.matricula?c} method="post">
+                                                        <fieldset>
+                                                            <div class="modal-body">
+                                                                <ol class="list-group list-group-flush">
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                                                        <div class="m-auto">
+                                                                            <label for="matricula" class="fw-bold form-label">Matricula</label>
+                                                                            <input type="text" id="matricula" name="matricula" class="form-control" value=${estudiante.matricula?c} required/>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-dark">
+                                                                        <div class="m-auto">
+                                                                            <label for="nombre" class="fw-bold form-label">Nombre</label>
+                                                                            <input type="text" id="nombre" name="nombre" class="form-control" value=${estudiante.getNombre()} required/>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                                                        <div class="m-auto">
+                                                                            <label for="apellido" class="fw-bold form-label">Apellido</label>
+                                                                            <input type="text" id="apellido" name="apellido" class="form-control" value=${estudiante.getApellido()} required/>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-dark">
+                                                                        <div class="m-auto">
+                                                                            <label for="telefono" class="fw-bold form-label">Teléfono</label>
+                                                                            <input type="text" id="telefono" name="telefono" class="form-control" value=${estudiante.getTelefono()} required/>
+                                                                        </div>
+                                                                    </li>
+                                                                </ol>
+                                                            </div>
+                                                        </fieldset>
+                                                        <input type="text" id="matriculaPasada" name="matriculaPasada" value=${estudiante.matricula?c} required hidden/>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                            <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <!-- Delete Estudiante Modal -->
                                         <div class="modal fade" id=${"delete"+estudiante.matricula?c} data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby=${"delete"+estudiante.matricula?c+"Label"} aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
@@ -190,7 +223,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="agregarEstudianteLabel">Información de Estudiante</h5>
+                    <h5 class="modal-title text-black" id="agregarEstudianteLabel">Información de Estudiante</h5>
                     <button type="button" class="btn-sm btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="/estudiante/agregar" method="post">

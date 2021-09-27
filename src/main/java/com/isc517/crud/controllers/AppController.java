@@ -28,7 +28,6 @@ public class AppController {
     public String deleteEstudiante(Model model, @PathVariable String matricula){
         estudianteRepository.deleteEstudiante(Integer.parseInt(matricula));
 
-        model.addAttribute("editable", editable);
         model.addAttribute("estudiantes", estudianteRepository.getEstudiantes());
         model.addAttribute("cantidadEstudiantes", estudianteRepository.estudiantes.size());
         return "redirect:/";
@@ -45,32 +44,21 @@ public class AppController {
                 )
         );
 
-        model.addAttribute("editable", editable);
         model.addAttribute("estudiantes", estudianteRepository.getEstudiantes());
         model.addAttribute("cantidadEstudiantes", estudianteRepository.estudiantes.size());
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/estudiante/{matriculaPasada}")
-    public String editarEstudiante(Model model, @PathVariable String matriculaPasada, @RequestParam Map<String, String> requestParams){
+    @RequestMapping(value = "/estudiante/{matriculaPasada}", method = RequestMethod.POST)
+    public String editarEstudiante(Model model, @PathVariable int matriculaPasada, @RequestParam Map<String, String> requestParams){
         estudianteRepository.putEstudiante(
-                Integer.parseInt(matriculaPasada),
+                matriculaPasada,
                 new Estudiante(
                 Integer.parseInt(requestParams.get("matricula")),
                 requestParams.get("nombre"),
                 requestParams.get("apellido"),
                 requestParams.get("telefono")
         ));
-        model.addAttribute("editable", editable);
-        model.addAttribute("estudiantes", estudianteRepository.getEstudiantes());
-        model.addAttribute("cantidadEstudiantes", estudianteRepository.estudiantes.size());
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/estudiante/editable")
-    public String editable(Model model){
-        editable = !editable;
-        model.addAttribute("editable", editable);
         model.addAttribute("estudiantes", estudianteRepository.getEstudiantes());
         model.addAttribute("cantidadEstudiantes", estudianteRepository.estudiantes.size());
         return "redirect:/";
@@ -84,7 +72,6 @@ public class AppController {
      */
     @RequestMapping("/")
     public String getIndex(Model model) {
-        model.addAttribute("editable", editable);
         model.addAttribute("estudiantes", estudianteRepository.getEstudiantes());
         model.addAttribute("cantidadEstudiantes", estudianteRepository.estudiantes.size());
         return "/index";
